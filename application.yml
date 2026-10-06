@@ -1,0 +1,159 @@
+# Lavalink configuration
+#
+# QUICK SETUP
+# Change these values first:
+# - Port: server.port
+# - Password: lavalink.server.password
+# - YouTube OAuth token: plugins.youtube.oauth.refreshToken
+# - Skip YouTube OAuth initialization: plugins.youtube.oauth.skipInitialization
+#
+# The settings stay in their required Lavalink sections below.
+
+lavalink:
+  plugins:
+    - dependency: dev.lavalink.youtube:youtube-plugin:f45bbb7aebfcbc1c553769e04af6cd43afa8b7c3
+      repository: https://maven.lavalink.dev/snapshots
+      snapshot: true
+    - dependency: "com.github.ItzRandom23:PulseLink:v1.7.4"
+      repository: https://jitpack.io
+      snapshot: false
+    - dependency: com.github.topi314.lavasearch:lavasearch-plugin:1.0.0
+      repository: https://maven.lavalink.dev/releases
+      snapshot: false
+
+  server:
+    # User setting: clients must use this password to connect.
+    password: aeroxdevs
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    gc-warnings: true
+    opusEncodingQuality: 5
+    playerUpdateInterval: 5
+    resamplingQuality: HIGH
+    soundcloudSearchEnabled: true
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    youtubePlaylistLoadLimit: 6
+    youtubeSearchEnabled: true
+
+    filters:
+      channelMix: true
+      distortion: true
+      equalizer: true
+      karaoke: true
+      lowPass: true
+      rotation: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+      volume: true
+
+    sources:
+      bandcamp: true
+      http: true
+      local: false
+      nico: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      youtube: false
+
+    timeouts:
+      connectTimeoutMs: 60000
+      connectionRequestTimeoutMs: 60000
+      socketTimeoutMs: 60000
+
+logging:
+  file:
+    path: ./logs/
+
+  level:
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
+    lavalink: INFO
+    root: INFO
+
+  logback:
+    rollingpolicy:
+      max-file-size: 1GB
+      max-history: 30
+
+  request:
+    enabled: true
+    includeClientInfo: true
+    includeHeaders: false
+    includePayload: true
+    includeQueryString: true
+    maxPayloadLength: 10000
+
+metrics:
+  prometheus:
+    enabled: false
+    endpoint: /metrics
+
+plugins:
+  lavasearch:
+    sources:
+      - spotify
+      - youtube
+
+  pulselink:
+    providers:
+      - "ytsearch:%ISRC%"
+      - "ytsearch:%QUERY%"
+    sources:
+      spotify: true
+      amazonmusic: false
+      applemusic: true
+      deezer: false
+      yandexmusic: false
+      vkmusic: false
+      tidal: true
+      qobuz: false
+      ytdlp: false
+      jiosaavn: true
+      audiomack: true
+      gaana: true
+      soundcloud: true
+      pandora: true
+      flowerytts: false
+      youtube: false
+
+    spotify:
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+      resolveArtistsInSearch: true
+      localFiles: false
+
+  youtube:
+    allowDirectPlaylistIds: true
+    allowDirectVideoIds: true
+    allowSearch: true
+    clients:
+      - WEB
+      - TV
+      - ANDROID_VR
+    enabled: true
+
+    oauth:
+      enabled: true
+      # User setting: add the OAuth refresh token here when OAuth is used.
+      refreshToken:
+      # User setting: set true to skip OAuth initialization at startup.
+      skipInitialization: false
+
+    remoteCipher:
+      url: https://cipher.kikkia.dev/
+      userAgent: lavalink-server
+
+sentry:
+  dsn: ""
+  environment: ""
+
+server:
+  address: 0.0.0.0
+  http2:
+    enabled: false
+  # User setting: change the port if another service uses port 80.
+  port: 80
+    
